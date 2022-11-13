@@ -24,7 +24,7 @@ module.exports.createProduct = (req, res) => {
         })
         .catch(err => {
             console.log("server issue")
-            res.json(err)
+            res.status(400).json(err)
         });
 }
 

@@ -6,6 +6,7 @@ const Add = (props) => {
     const [title, setTitle] = useState("")
     const [price, setPrice] = useState("")
     const [description, setDescription] = useState("")
+    const [errors, setErrors] = useState([])
     const navigate = useNavigate()
 
     const AddItem = (e) =>{
@@ -22,6 +23,12 @@ const Add = (props) => {
             console.log(
                 err
             )
+            const errorResponse = err.response.data.errors;
+            const errorArr = [];
+            for (const key of Object.keys(errorResponse)){
+                errorArr.push(errorResponse[key].message)
+            }
+            setErrors(errorArr)
         })
     }
     return (
@@ -30,6 +37,9 @@ const Add = (props) => {
             {JSON.stringify(title)} <br/>
             {JSON.stringify(price)} <br/>
             {JSON.stringify(description)} <br/>
+            <>
+                {errors.map((err, index) => <p key={index}>{err}</p>)}
+            </>
             <label>Add Item for Sale</label>
             <form onSubmit={AddItem}>
                 Title: <input onChange ={e => setTitle(e.target.value)} value={title}/> <br/>
